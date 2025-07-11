@@ -1,3 +1,6 @@
+/* Mengimpor font Google Fonts 'Luckiest Guy' untuk teks logo */
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
 /* Styling Dasar untuk Body dan Reset */
 body {
     font-family: Arial, sans-serif;
@@ -318,43 +321,7 @@ footer {
     margin-top: auto;
 }
 
-/* Styling untuk daftar username */
-.user-list-title {
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 0.5rem;
-    margin-top: 2rem;
-    text-align: center;
-    font-family: 'Luckiest Guy', cursive, sans-serif;
-    font-size: 2em;
-}
-
-.user-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.user-list li {
-    padding: 8px 15px;
-    margin-bottom: 5px;
-    background-color: #e6f2ff;
-    border-radius: 5px;
-    border: 1px solid #b3d9ff;
-    font-size: 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.user-list li strong {
-    color: #0056b3;
-}
-
-.user-list li .user-timestamp {
-    font-size: 0.8em;
-    color: #666;
-}
+/* Styling yang terkait dengan daftar username telah dihapus dari sini */
 
 /* --- Styling untuk Informasi Developer --- */
 .developer-info-title {
@@ -410,7 +377,7 @@ footer {
         margin: 15px;
         padding: 15px;
     }
-    .event-title, .user-list-title, .developer-info-title {
+    .event-title, .developer-info-title { /* user-list-title dihapus */
         font-size: 1.8em;
     }
     .developer-photo {
@@ -437,7 +404,7 @@ footer {
         margin: 10px;
         padding: 10px;
     }
-    .event-title, .user-list-title, .developer-info-title {
+    .event-title, .developer-info-title { /* user-list-title dihapus */
         font-size: 1.5em;
     }
     .developer-photo {
@@ -447,11 +414,5 @@ footer {
     .developer-name, .roblox-username {
         font-size: 1em;
     }
-    .user-list li {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .user-list li .user-timestamp {
-        margin-top: 3px;
-    }
-    }
+    /* Gaya untuk user-list li dalam media query juga dihapus */
+}
