@@ -262,3 +262,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Tambahkan event listener untuk tombol (jika pengguna ingin memuat ulang manual)
     loadStockButton.addEventListener('click', fetchDataAndDisplay);
 });
+                    
