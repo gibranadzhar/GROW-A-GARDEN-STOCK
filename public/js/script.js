@@ -15,58 +15,66 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
-            const apiResponse = await response.json(); // Simpan respons lengkap API
+            const apiResponse = await response.json();
 
-            // Periksa apakah ada properti 'result'
             if (apiResponse && apiResponse.result) {
                 const resultData = apiResponse.result;
-                let allItems = [];
+                let formattedStockHtml = ''; // String untuk menampung seluruh HTML stok
 
-                // Kumpulkan semua item dari berbagai kategori
-                // Menggunakan destructuring dan spread operator untuk lebih ringkas
-                const categories = ['seeds', 'gear', 'eggs', 'cosmetics', 'honey'];
-                categories.forEach(category => {
-                    if (Array.isArray(resultData[category])) {
-                        allItems = allItems.concat(resultData[category]);
+                // Definisikan kategori yang ingin ditampilkan beserta judul dan emoji
+                const categoriesToDisplay = [
+                    { key: 'seeds', title: 'Seeds Stock', emoji: '🌱' },
+                    { key: 'gear', title: 'Gear Stock', emoji: '⚙️' },
+                    { key: 'eggs', title: 'Egg Stock', emoji: '🥚' },
+                    { key: 'cosmetics', title: 'Cosmetic Items', emoji: '🎨' }
+                    // Anda bisa menambahkan kategori 'honey' di sini jika ingin menampilkannya
+                    // { key: 'honey', title: 'Honey Items', emoji: '🍯' }
+                ];
+
+                categoriesToDisplay.forEach(categoryInfo => {
+                    const categoryItems = resultData[categoryInfo.key];
+
+                    if (Array.isArray(categoryItems) && categoryItems.length > 0) {
+                        // Urutkan item dalam kategori berdasarkan nama
+                        categoryItems.sort((a, b) => {
+                            const nameA = (a.name || '').toLowerCase();
+                            const nameB = (b.name || '').toLowerCase();
+                            return nameA.localeCompare(nameB);
+                        });
+
+                        // Tambahkan judul kategori dengan emoji
+                        formattedStockHtml += `<h3>${categoryInfo.emoji} *${categoryInfo.title}*</h3>`;
+                        formattedStockHtml += `<ul class="category-list">`; // Tambahkan class untuk styling
+
+                        categoryItems.forEach(item => {
+                            const itemName = item.name || 'Produk Tanpa Nama';
+                            const itemQuantity = item.quantity !== undefined ? item.quantity : 'Stok Tidak Diketahui';
+                            // const imageUrl = item.imageUrl || ''; // Jika ingin menampilkan gambar, ini masih bisa digunakan
+
+                            let itemPrefix = '-'; // Default prefix
+                            // Beberapa item di 'Cosmetics' contohnya memiliki tanda '> ⚙️'
+                            if (categoryInfo.key === 'cosmetics' && itemName === 'Round Metal Arbour') {
+                                itemPrefix = '> ⚙️';
+                            }
+                            // Anda bisa menambahkan logika emoji spesifik per item di sini jika diperlukan
+
+                            formattedStockHtml += `<li>${itemPrefix} ${itemName} x${itemQuantity}</li>`;
+                            // Anda bisa menambahkan gambar di sini jika ingin:
+                            // if (imageUrl) {
+                            //     formattedStockHtml += `<img src="${imageUrl}" alt="${itemName}" class="stock-item-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/20?text=No+Img';">`;
+                            // }
+                        });
+                        formattedStockHtml += `</ul>`;
                     }
                 });
-                
-                // Urutkan item berdasarkan nama agar lebih rapi
-                allItems.sort((a, b) => {
-                    const nameA = (a.name || '').toLowerCase(); // Pastikan ada string, konversi ke lowercase
-                    const nameB = (b.name || '').toLowerCase(); // Pastikan ada string, konversi ke lowercase
-                    return nameA.localeCompare(nameB); // Gunakan localeCompare untuk pengurutan yang benar
-                });
 
-                if (allItems.length > 0) {
-                    let stockHtml = '<ul class="stock-items">';
-                    allItems.forEach(item => {
-                        const itemName = item.name || 'Produk Tanpa Nama';
-                        const itemQuantity = item.quantity !== undefined ? item.quantity : 'Stok Tidak Diketahui';
-                        const imageUrl = item.imageUrl || ''; // Dapatkan URL gambar, jika ada
-                        
-                        stockHtml += `<li class="stock-item">`;
-                        // Tambahkan tag img jika imageUrl tersedia
-                        if (imageUrl) {
-                            stockHtml += `<img src="${imageUrl}" alt="${itemName}" class="stock-item-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/60?text=No+Image';">`;
-                        } else {
-                             // Tampilkan placeholder jika tidak ada URL gambar sama sekali
-                            stockHtml += `<img src="https://via.placeholder.com/60?text=No+Image" alt="No image available for ${itemName}" class="stock-item-image">`;
-                        }
-                        stockHtml += `<div class="item-details">
-                                        <span class="product-name">${itemName}</span><br>
-                                        <span class="product-stock">${itemQuantity} unit</span>
-                                      </div>
-                                    </li>`;
-                    });
-                    stockHtml += '</ul>';
-                    stockListDiv.innerHTML = stockHtml;
-                } else {
-                    stockListDiv.innerHTML = '<p>Tidak ada data stok yang tersedia di kategori manapun.</p>';
-                }
+                // Tambahkan copyright notice di akhir
+                formattedStockHtml += `<p class="copyright-text">\`Copyright © growagarden.brann\`</p>`;
+
+                stockListDiv.innerHTML = formattedStockHtml;
 
             } else {
-                stockListDiv.innerHTML = '<p style="color: red;">Struktur data API tidak seperti yang diharapkan (properti "result" tidak ditemukan).</p>';
+                stockListDiv.innerHTML = '<p>Tidak ada data stok yang tersedia atau struktur API tidak sesuai.</p>';
             }
 
         } catch (error) {
