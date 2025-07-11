@@ -3,17 +3,16 @@
 
 /* Styling Dasar untuk Body dan Reset */
 body {
-    font-family: Arial, sans-serif; /* Font dasar, bisa disesuaikan */
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /* Latar belakang gradien biru langit seperti gambar */
     background: linear-gradient(to bottom, #87CEEB, #ADD8E6);
     color: #333;
     line-height: 1.6;
-    min-height: 100vh; /* Memastikan body mengisi seluruh viewport tinggi */
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; /* Untuk menempatkan footer di bagian bawah */
-    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* Pseudo-element untuk simulasi bukit hijau di bagian bawah */
@@ -23,23 +22,21 @@ body::before {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 150px; /* Tinggi bukit */
-    /* Gradien hijau untuk bukit */
+    height: 150px;
     background: linear-gradient(to top, #6B8E23, #8BC34A);
-    /* Bentuk elips untuk bukit */
     clip-path: ellipse(120% 60% at 50% 100%);
-    z-index: 0; /* Pastikan di belakang konten utama */
+    z-index: 0;
 }
 
 /* Styling untuk Header */
 header {
-    background-color: rgba(255, 255, 255, 0.6); /* Latar belakang semi-transparan */
+    background-color: rgba(255, 255, 255, 0.6);
     color: #333;
     padding: 1rem 0;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
-    z-index: 2; /* Di atas elemen bukit */
+    z-index: 2;
 }
 
 /* Styling untuk H1 di Header (jika digunakan) */
@@ -73,13 +70,13 @@ header h1 {
 
 /* Styling untuk Teks "BY GIBRAN" */
 .by-text {
-    font-family: Arial, sans-serif; /* Bisa menggunakan font yang lebih sederhana atau tetap 'Luckiest Guy' */
-    font-size: 1.1em; /* Ukuran teks */
-    color: #555; /* Warna abu-abu gelap */
-    margin-top: -5px; /* Sedikit naik agar dekat dengan teks di atasnya */
-    margin-bottom: 15px; /* Jarak dengan konten di bawahnya */
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Sedikit bayangan putih untuk menonjol */
-    font-weight: bold; /* Agar sedikit tebal */
+    font-family: Arial, sans-serif;
+    font-size: 1.1em;
+    color: #555;
+    margin-top: -5px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+    font-weight: bold;
 }
 
 
@@ -152,7 +149,7 @@ h2 {
     list-style: none;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Sesuaikan lebar minimum agar ada ruang untuk gambar */
     gap: 15px;
     justify-content: center;
 }
@@ -165,10 +162,27 @@ h2 {
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.2s ease-in-out;
+    display: flex; /* Menggunakan flexbox untuk mengatur gambar dan teks */
+    flex-direction: column; /* Gambar di atas teks */
+    align-items: center; /* Pusatkan secara horizontal */
+    justify-content: center; /* Pusatkan secara vertikal */
+    min-height: 150px; /* Tinggi minimum untuk item, agar gambar tidak membuat kotak terlalu kecil */
 }
 
 .stock-item:hover {
     transform: translateY(-5px);
+}
+
+/* Styling untuk gambar produk */
+.stock-item-image {
+    width: 60px; /* Lebar gambar */
+    height: 60px; /* Tinggi gambar */
+    object-fit: contain; /* Pastikan gambar tidak terdistorsi */
+    margin-bottom: 10px; /* Jarak antara gambar dan teks */
+    border-radius: 5px; /* Sedikit sudut membulat pada gambar */
+    background-color: #fff; /* Latar belakang putih untuk gambar jika transparan */
+    padding: 5px; /* Sedikit padding di sekitar gambar */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .product-name {
@@ -213,6 +227,10 @@ footer {
     .stock-item {
         padding: 10px;
     }
+    .stock-item-image {
+        width: 50px;
+        height: 50px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -232,5 +250,9 @@ footer {
     }
     .stock-items {
         grid-template-columns: 1fr;
+    }
+    .stock-item-image {
+        width: 40px;
+        height: 40px;
     }
 }
