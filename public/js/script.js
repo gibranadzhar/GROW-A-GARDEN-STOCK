@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const eventListDiv = document.getElementById('eventList');
     const countdownTimerDiv = document.getElementById('countdownTimer');
     const weatherEffectsDiv = document.getElementById('weatherEffects');
-    const userListDiv = document.getElementById('userList');
-    const leafEffectsDiv = document.getElementById('leafEffects'); // Dapatkan elemen container daun
+    // const userListDiv = document.getElementById('userList'); // Dihapus
+    const leafEffectsDiv = document.getElementById('leafEffects');
 
     // --- LOGIC FETCH DATA API ---
     // Pemetaan Emoji untuk Item
@@ -146,31 +146,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // --- LOGIC FETCH DAN TAMPILKAN DAFTAR USERNAME ---
-    async function fetchAndDisplayUsernames() {
-        userListDiv.innerHTML = '<p>Memuat daftar username...</p>';
-        try {
-            const response = await fetch('/api/get-usernames');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const usernames = await response.json();
+    // --- LOGIC FETCH DAN TAMPILKAN DAFTAR USERNAME (DIHAPUS) ---
+    // async function fetchAndDisplayUsernames() {
+    //     userListDiv.innerHTML = '<p>Memuat daftar username...</p>';
+    //     try {
+    //         const response = await fetch('/api/get-usernames');
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! status: ${response.status}`);
+    //         }
+    //         const usernames = await response.json();
 
-            if (Array.isArray(usernames) && usernames.length > 0) {
-                let userListHtml = '<ul class="user-list">';
-                usernames.forEach(user => {
-                    userListHtml += `<li><strong>${user.username}</strong> <span class="user-timestamp">(${user.timestamp})</span></li>`;
-                });
-                userListHtml += '</ul>';
-                userListDiv.innerHTML = userListHtml;
-            } else {
-                userListDiv.innerHTML = '<p>Belum ada username yang masuk.</p>';
-            }
-        } catch (error) {
-            console.error('Error fetching usernames list:', error);
-            userListDiv.innerHTML = `<p style="color: red;">Gagal memuat daftar username: ${error.message}</p>`;
-        }
-    }
+    //         if (Array.isArray(usernames) && usernames.length > 0) {
+    //             let userListHtml = '<ul class="user-list">';
+    //             usernames.forEach(user => {
+    //                 userListHtml += `<li><strong>${user.username}</strong> <span class="user-timestamp">(${user.timestamp})</span></li>`;
+    //             });
+    //             userListHtml += '</ul>';
+    //             userListDiv.innerHTML = userListHtml;
+    //         } else {
+    //             userListDiv.innerHTML = '<p>Belum ada username yang masuk.</p>';
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching usernames list:', error);
+    //         userListDiv.innerHTML = `<p style="color: red;">Gagal memuat daftar username: ${error.message}</p>`;
+    //     }
+    // }
+
 
     // --- LOGIC COUNTDOWN (5 MENIT) ---
     const RESET_INTERVAL_MS = 5 * 60 * 1000;
@@ -269,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Panggil fungsi-fungsi inisialisasi saat DOMContentLoaded
     fetchDataAndDisplay();
     startCountdown();
-    fetchAndDisplayUsernames();
+    // fetchAndDisplayUsernames(); // Dihapus dari sini
 
     // Tombol muat ulang data manual
     loadStockButton.addEventListener('click', fetchDataAndDisplay);
