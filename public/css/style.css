@@ -255,7 +255,7 @@ h4 { /* Styling untuk sub-judul di bagian event */
     font-size: 1.1em;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 10px; /* Jarak antara emoji dan teks */
 }
 
 /* Styling untuk teks copyright */
