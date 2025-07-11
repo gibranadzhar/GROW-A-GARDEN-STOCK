@@ -7,15 +7,25 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="robloxGate" class="roblox-gate">
+        <div class="gate-content">
+            <h2>Selamat Datang di Grow A Garden!</h2>
+            <p>Silakan masukkan Username Roblox Anda untuk masuk.</p>
+            <input type="text" id="robloxUsernameInput" placeholder="Masukkan Username Roblox Anda" class="gate-input">
+            <button id="enterWebsiteButton" class="themed-button gate-button">Masuk ke Website</button>
+            <p id="gateMessage" class="gate-message"></p>
+        </div>
+    </div>
+
     <div id="weatherEffects" class="weather-effects-container"></div>
 
-    <header>
+    <header class="hidden-until-enter">
         <h1>Daftar Stok Produk</h1>
         <div class="logo-text">GROW A GARDEN</div>
         <div class="by-text">BY GIBRAN</div>
     </header>
 
-    <main>
+    <main class="hidden-until-enter">
         <p>Klik tombol di bawah ini untuk melihat stok terbaru produk-produk kami:</p>
 
         <button id="loadStockButton" class="themed-button">Lihat Stok Sekarang!</button>
@@ -35,7 +45,7 @@
         </div>
     </main>
 
-    <footer>
+    <footer class="hidden-until-enter">
         <p>&copy; 2025 Grow A Garden. Semua hak dilindungi.</p>
     </footer>
 
