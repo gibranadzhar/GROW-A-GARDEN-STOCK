@@ -15,31 +15,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
-            const apiResponse = await response.json();
+            const apiResponse = await response.json(); // Simpan respons lengkap API
 
+            // Periksa apakah ada properti 'result'
             if (apiResponse && apiResponse.result) {
                 const resultData = apiResponse.result;
                 let allItems = [];
 
                 // Kumpulkan semua item dari berbagai kategori
-                if (Array.isArray(resultData.seeds)) {
-                    allItems = allItems.concat(resultData.seeds);
-                }
-                if (Array.isArray(resultData.gear)) {
-                    allItems = allItems.concat(resultData.gear);
-                }
-                if (Array.isArray(resultData.eggs)) {
-                    allItems = allItems.concat(resultData.eggs);
-                }
-                if (Array.isArray(resultData.cosmetics)) {
-                    allItems = allItems.concat(resultData.cosmetics);
-                }
-                if (Array.isArray(resultData.honey)) {
-                    allItems = allItems.concat(resultData.honey);
-                }
+                // Menggunakan destructuring dan spread operator untuk lebih ringkas
+                const categories = ['seeds', 'gear', 'eggs', 'cosmetics', 'honey'];
+                categories.forEach(category => {
+                    if (Array.isArray(resultData[category])) {
+                        allItems = allItems.concat(resultData[category]);
+                    }
+                });
                 
-                // Urutkan item berdasarkan nama agar lebih rapi (opsional)
-                allItems.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                // Urutkan item berdasarkan nama agar lebih rapi
+                allItems.sort((a, b) => {
+                    const nameA = (a.name || '').toLowerCase(); // Pastikan ada string, konversi ke lowercase
+                    const nameB = (b.name || '').toLowerCase(); // Pastikan ada string, konversi ke lowercase
+                    return nameA.localeCompare(nameB); // Gunakan localeCompare untuk pengurutan yang benar
+                });
 
                 if (allItems.length > 0) {
                     let stockHtml = '<ul class="stock-items">';
@@ -47,12 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         const itemName = item.name || 'Produk Tanpa Nama';
                         const itemQuantity = item.quantity !== undefined ? item.quantity : 'Stok Tidak Diketahui';
                         const imageUrl = item.imageUrl || ''; // Dapatkan URL gambar, jika ada
-
+                        
                         stockHtml += `<li class="stock-item">`;
                         // Tambahkan tag img jika imageUrl tersedia
                         if (imageUrl) {
                             stockHtml += `<img src="${imageUrl}" alt="${itemName}" class="stock-item-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/60?text=No+Image';">`;
-                            // onerror: Jika gambar gagal dimuat, akan menampilkan placeholder
+                        } else {
+                             // Tampilkan placeholder jika tidak ada URL gambar sama sekali
+                            stockHtml += `<img src="https://via.placeholder.com/60?text=No+Image" alt="No image available for ${itemName}" class="stock-item-image">`;
                         }
                         stockHtml += `<div class="item-details">
                                         <span class="product-name">${itemName}</span><br>
