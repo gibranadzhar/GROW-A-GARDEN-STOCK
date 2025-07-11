@@ -3,17 +3,16 @@
 
 /* Styling Dasar untuk Body dan Reset */
 body {
-    font-family: Arial, sans-serif; /* Font dasar, bisa disesuaikan */
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /* Latar belakang gradien biru langit seperti gambar */
     background: linear-gradient(to bottom, #87CEEB, #ADD8E6);
     color: #333;
     line-height: 1.6;
-    min-height: 100vh; /* Memastikan body mengisi seluruh viewport tinggi */
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; /* Untuk menempatkan footer di bagian bawah */
-    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* Pseudo-element untuk simulasi bukit hijau di bagian bawah */
@@ -23,26 +22,24 @@ body::before {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 150px; /* Tinggi bukit */
-    /* Gradien hijau untuk bukit */
+    height: 150px;
     background: linear-gradient(to top, #6B8E23, #8BC34A);
-    /* Bentuk elips untuk bukit */
     clip-path: ellipse(120% 60% at 50% 100%);
-    z-index: 0; /* Pastikan di belakang konten utama */
+    z-index: 0;
 }
 
 /* Styling untuk Header */
 header {
-    background-color: rgba(255, 255, 255, 0.6); /* Latar belakang semi-transparan */
+    background-color: rgba(255, 255, 255, 0.6);
     color: #333;
     padding: 1rem 0;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
-    z-index: 2; /* Di atas elemen bukit */
+    z-index: 2;
 }
 
-/* Styling untuk H1 di Header (jika digunakan) */
+/* Styling untuk H1 di Header */
 header h1 {
     margin: 0;
     font-family: 'Arial Black', sans-serif;
@@ -57,7 +54,7 @@ header h1 {
     font-size: 2.8em;
     font-weight: bold;
     color: white;
-    text-shadow: 
+    text-shadow:
         -2px -2px 0 #228B22,
          2px -2px 0 #228B22,
         -2px  2px 0 #228B22,
@@ -73,15 +70,14 @@ header h1 {
 
 /* Styling untuk Teks "BY GIBRAN" */
 .by-text {
-    font-family: Arial, sans-serif; /* Bisa menggunakan font yang lebih sederhana atau tetap 'Luckiest Guy' */
-    font-size: 1.1em; /* Ukuran teks */
-    color: #555; /* Warna abu-abu gelap */
-    margin-top: -5px; /* Sedikit naik agar dekat dengan teks di atasnya */
-    margin-bottom: 15px; /* Jarak dengan konten di bawahnya */
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Sedikit bayangan putih untuk menonjol */
-    font-weight: bold; /* Agar sedikit tebal */
+    font-family: Arial, sans-serif;
+    font-size: 1.1em;
+    color: #555;
+    margin-top: -5px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+    font-weight: bold;
 }
-
 
 /* Styling untuk Konten Utama (main) */
 main {
@@ -96,12 +92,31 @@ main {
     flex-grow: 1;
 }
 
-h2 {
+h2 { /* Default style for H2 */
     color: #228B22;
     border-bottom: 2px solid #228B22;
     padding-bottom: 0.5rem;
     margin-top: 2rem;
     text-align: center;
+}
+
+/* Styling untuk judul event */
+.event-title {
+    color: #FF8C00;
+    border-bottom: 2px solid #FF8C00;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-family: 'Luckiest Guy', cursive, sans-serif;
+    font-size: 2.2em;
+}
+
+h4 { /* Styling untuk sub-judul di bagian event */
+    color: #4CAF50;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    text-align: left;
+    padding-left: 10px;
 }
 
 /* Styling untuk tombol */
@@ -142,45 +157,73 @@ h2 {
     transform: none;
 }
 
-
-/* Styling untuk Daftar Stok (kontainer utama) */
-#stockList {
-    text-align: center; /* Pusat untuk pesan "Memuat..." atau "Tidak ada data" */
+/* Styling untuk hitung mundur */
+.countdown-text {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #007BFF; /* Warna biru */
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #e6f2ff;
+    border-radius: 5px;
+    border: 1px solid #b3d9ff;
 }
 
-/* Styling untuk judul kategori (baru) */
+/* Styling untuk Daftar Stok */
+#stockList {
+    text-align: center;
+}
+
 #stockList h3 {
     font-family: 'Luckiest Guy', cursive, sans-serif;
     font-size: 1.8em;
-    color: #228B22; /* Hijau */
+    color: #228B22;
     margin-top: 1.5em;
     margin-bottom: 0.5em;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    text-align: left; /* Teks kategori rata kiri */
-    padding-left: 10px; /* Sedikit indentasi */
+    text-align: left;
+    padding-left: 10px;
 }
 
-/* Styling untuk daftar item dalam kategori (baru) */
-#stockList ul.category-list {
-    list-style: none; /* Hapus bullet default */
+#stockList ul.category-list,
+#eventList ul.event-item-list,
+#eventList ul.weather-history-list {
+    list-style: none;
     padding: 0;
-    margin: 0 0 1.5em 0; /* Jarak bawah antar kategori */
-    text-align: left; /* Teks item rata kiri */
+    margin: 0 0 1.5em 0;
+    text-align: left;
 }
 
-#stockList ul.category-list li {
+#stockList ul.category-list li,
+#eventList ul.event-item-list li,
+#eventList ul.weather-history-list li {
     padding: 5px 10px;
     margin-bottom: 3px;
-    background-color: #f0f8f0; /* Latar belakang hijau muda untuk item */
+    background-color: #f0f8f0;
     border-radius: 4px;
     border: 1px solid #e0e8e0;
     font-size: 1.1em;
-    /* Jika Anda ingin menampilkan gambar lagi dengan format ini, Anda perlu penyesuaian flexbox */
-    /* display: flex; 
-    align-items: center; */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Tambah jarak untuk gambar */
 }
 
-/* Styling untuk teks copyright (baru) */
+/* Styling untuk gambar produk (jika digunakan) */
+.stock-item-image-inline {
+    width: 24px; /* Ukuran gambar inline */
+    height: 24px;
+    vertical-align: middle; /* Agar sejajar dengan teks */
+    margin-right: 5px;
+    border-radius: 3px;
+    background-color: #fff;
+    padding: 2px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    object-fit: contain;
+}
+
+/* Styling untuk teks copyright */
 .copyright-text {
     font-size: 0.9em;
     color: #666;
@@ -188,62 +231,6 @@ h2 {
     text-align: center;
     font-style: italic;
 }
-
-
-/* Styling untuk item stok individual (jika Anda kembali menggunakan format grid/gambar per item) */
-/* Catatan: Gaya di bawah ini mungkin tidak relevan jika Anda menggunakan format daftar kategori baru
-   tanpa gambar yang tertanam di setiap LI, tapi saya sertakan untuk kelengkapan */
-.stock-items { /* Ini adalah class dari UL di versi sebelumnya */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    justify-content: center;
-}
-
-.stock-item { /* Ini adalah class dari LI di versi sebelumnya */
-    background-color: #F8F8F8;
-    border: 2px solid #D3D3D3;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
-    display: flex; /* Menggunakan flexbox untuk mengatur gambar dan teks */
-    flex-direction: column; /* Gambar di atas teks */
-    align-items: center; /* Pusatkan secara horizontal */
-    justify-content: center; /* Pusatkan secara vertikal */
-    min-height: 150px; /* Tinggi minimum untuk item */
-}
-
-.stock-item:hover {
-    transform: translateY(-5px);
-}
-
-/* Styling untuk gambar produk (jika digunakan) */
-.stock-item-image {
-    width: 60px; /* Lebar gambar */
-    height: 60px; /* Tinggi gambar */
-    object-fit: contain; /* Pastikan gambar tidak terdistorsi */
-    margin-bottom: 10px; /* Jarak antara gambar dan teks */
-    border-radius: 5px; /* Sedikit sudut membulat pada gambar */
-    background-color: #fff; /* Latar belakang putih untuk gambar jika transparan */
-    padding: 5px; /* Sedikit padding di sekitar gambar */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.product-name { /* Ini adalah class untuk nama produk di LI lama */
-    font-weight: bold;
-    color: #4CAF50;
-    font-size: 1.2em;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.product-stock { /* Ini adalah class untuk stok produk di LI lama */
-    color: #FF5722;
-    font-size: 1.1em;
-}
-
 
 /* Styling untuk Footer */
 footer {
@@ -271,13 +258,8 @@ footer {
         margin: 15px;
         padding: 15px;
     }
-    /* Sesuaikan jika Anda menggunakan gaya stock-item yang lama */
-    .stock-item {
-        padding: 10px;
-    }
-    .stock-item-image {
-        width: 50px;
-        height: 50px;
+    .event-title {
+        font-size: 1.8em;
     }
 }
 
@@ -296,12 +278,7 @@ footer {
         margin: 10px;
         padding: 10px;
     }
-    /* Sesuaikan jika Anda menggunakan gaya stock-items yang lama */
-    .stock-items {
-        grid-template-columns: 1fr;
-    }
-    .stock-item-image {
-        width: 40px;
-        height: 40px;
+    .event-title {
+        font-size: 1.5em;
     }
 }
