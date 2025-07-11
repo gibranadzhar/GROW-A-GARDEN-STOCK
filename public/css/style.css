@@ -1,6 +1,3 @@
-/* Mengimpor font Google Fonts 'Luckiest Guy' untuk teks logo */
-@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
-
 /* Styling Dasar untuk Body dan Reset */
 body {
     font-family: Arial, sans-serif;
@@ -13,7 +10,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    position: relative; /* Penting untuk posisi absolut elemen cuaca */
+    position: relative;
 }
 
 /* Pseudo-element untuk simulasi bukit hijau di bagian bawah */
@@ -31,28 +28,71 @@ body::before {
 
 /* Container untuk efek cuaca */
 .weather-effects-container {
-    position: fixed; /* Agar menutupi seluruh viewport */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Agar tidak menghalangi interaksi mouse */
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* --- Styling untuk Efek Daun --- */
+.leaf-effects-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Penting agar tidak menghalangi interaksi */
     z-index: 1; /* Di atas latar belakang, di bawah konten utama */
-    overflow: hidden; /* Pastikan efek tidak keluar batas */
+    overflow: hidden;
+}
+
+.leaf {
+    position: absolute;
+    background-color: #8BC34A; /* Warna hijau daun */
+    border-radius: 50%; /* Bentuk bulat dasar */
+    opacity: 0.8;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+/* Animasi jatuh dan berputar */
+@keyframes fall {
+    0% {
+        transform: translate(var(--x-start), -10%) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--x-end), 110%) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Animasi goyang (opsional, untuk variasi) */
+@keyframes sway {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(var(--sway-amount)); }
+    100% { transform: translateX(0); }
 }
 
 /* Keyframe Animasi untuk Hujan */
 @keyframes rain-animation {
     0% { background-position: 0% 0%; }
-    100% { background-position: 20% 100%; } /* Menggerakkan tetesan */
+    100% { background-position: 20% 100%; }
 }
 
 /* Gaya untuk efek Hujan */
 .weather-effects-container.weather-rain {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAECAYAAACT5N1SAAAABmJLR0QA/wD/AP+AdzgyAAAAJ0lEQVQImWNgYGD4zxGIf2AARlAAU4KjRjAARmAAhgYGIc2YABcA/5gG7l8b2z0AAAAASUVORK5CYII='); /* Titik kecil semi-transparan */
-    background-size: 5px 5px; /* Ukuran tetesan */
-    animation: rain-animation 0.5s linear infinite; /* Kecepatan dan pengulangan */
-    opacity: 0.6; /* Semi-transparan */
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAECAYAAACT5N1SAAAABmJLR0QA/wD/AP+AdzgyAAAAJ0lEQVQImWNgYGD4zxGIf2AARlAAU4KjRjAARmAAhgYGIc2YABcA/5gG7l8b2z0AAAAASUVORK5CYII=');
+    background-size: 5px 5px;
+    animation: rain-animation 0.5s linear infinite;
+    opacity: 0.6;
 }
 
 /* Keyframe Animasi untuk Tornado (Contoh Sederhana) */
@@ -64,8 +104,8 @@ body::before {
 
 /* Gaya untuk efek Tornado */
 .weather-effects-container.weather-tornado {
-    background: radial-gradient(circle at center, rgba(100, 100, 100, 0.1) 0%, rgba(100, 100, 100, 0) 70%); /* Lingkaran samar */
-    animation: tornado-animation 2s ease-in-out infinite alternate; /* Animasi berulang */
+    background: radial-gradient(circle at center, rgba(100, 100, 100, 0.1) 0%, rgba(100, 100, 100, 0) 70%);
+    animation: tornado-animation 2s ease-in-out infinite alternate;
 }
 
 /* Default / Clear Weather (tidak ada efek) */
@@ -136,11 +176,11 @@ main {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     position: relative;
-    z-index: 2; /* Di atas efek cuaca */
+    z-index: 2;
     flex-grow: 1;
 }
 
-h2 { /* Default style for H2 */
+h2 {
     color: #228B22;
     border-bottom: 2px solid #228B22;
     padding-bottom: 0.5rem;
@@ -159,7 +199,7 @@ h2 { /* Default style for H2 */
     font-size: 2.2em;
 }
 
-h4 { /* Styling untuk sub-judul di bagian event */
+h4 {
     color: #4CAF50;
     margin-top: 1.5em;
     margin-bottom: 0.5em;
@@ -278,6 +318,83 @@ footer {
     margin-top: auto;
 }
 
+/* Styling untuk daftar username */
+.user-list-title {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-family: 'Luckiest Guy', cursive, sans-serif;
+    font-size: 2em;
+}
+
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-list li {
+    padding: 8px 15px;
+    margin-bottom: 5px;
+    background-color: #e6f2ff;
+    border-radius: 5px;
+    border: 1px solid #b3d9ff;
+    font-size: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-list li strong {
+    color: #0056b3;
+}
+
+.user-list li .user-timestamp {
+    font-size: 0.8em;
+    color: #666;
+}
+
+/* --- Styling untuk Informasi Developer --- */
+.developer-info-title {
+    color: #28a745;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-family: 'Luckiest Guy', cursive, sans-serif;
+    font-size: 2em;
+}
+
+.developer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+    text-align: center;
+}
+
+.developer-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.developer-name, .roblox-username {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     header h1 {
@@ -293,8 +410,15 @@ footer {
         margin: 15px;
         padding: 15px;
     }
-    .event-title {
+    .event-title, .user-list-title, .developer-info-title {
         font-size: 1.8em;
+    }
+    .developer-photo {
+        width: 120px;
+        height: 120px;
+    }
+    .developer-name, .roblox-username {
+        font-size: 1.1em;
     }
 }
 
@@ -313,8 +437,21 @@ footer {
         margin: 10px;
         padding: 10px;
     }
-    .event-title {
+    .event-title, .user-list-title, .developer-info-title {
         font-size: 1.5em;
     }
-}
-
+    .developer-photo {
+        width: 100px;
+        height: 100px;
+    }
+    .developer-name, .roblox-username {
+        font-size: 1em;
+    }
+    .user-list li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .user-list li .user-timestamp {
+        margin-top: 3px;
+    }
+    }
