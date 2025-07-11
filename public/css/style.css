@@ -3,16 +3,17 @@
 
 /* Styling Dasar untuk Body dan Reset */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; /* Font dasar, bisa disesuaikan */
     margin: 0;
     padding: 0;
+    /* Latar belakang gradien biru langit seperti gambar */
     background: linear-gradient(to bottom, #87CEEB, #ADD8E6);
     color: #333;
     line-height: 1.6;
-    min-height: 100vh;
+    min-height: 100vh; /* Memastikan body mengisi seluruh viewport tinggi */
     display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
+    flex-direction: column; /* Untuk menempatkan footer di bagian bawah */
+    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
 }
 
 /* Pseudo-element untuk simulasi bukit hijau di bagian bawah */
@@ -22,21 +23,23 @@ body::before {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 150px;
+    height: 150px; /* Tinggi bukit */
+    /* Gradien hijau untuk bukit */
     background: linear-gradient(to top, #6B8E23, #8BC34A);
+    /* Bentuk elips untuk bukit */
     clip-path: ellipse(120% 60% at 50% 100%);
-    z-index: 0;
+    z-index: 0; /* Pastikan di belakang konten utama */
 }
 
 /* Styling untuk Header */
 header {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.6); /* Latar belakang semi-transparan */
     color: #333;
     padding: 1rem 0;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
-    z-index: 2;
+    z-index: 2; /* Di atas elemen bukit */
 }
 
 /* Styling untuk H1 di Header (jika digunakan) */
@@ -70,13 +73,13 @@ header h1 {
 
 /* Styling untuk Teks "BY GIBRAN" */
 .by-text {
-    font-family: Arial, sans-serif;
-    font-size: 1.1em;
-    color: #555;
-    margin-top: -5px;
-    margin-bottom: 15px;
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
-    font-weight: bold;
+    font-family: Arial, sans-serif; /* Bisa menggunakan font yang lebih sederhana atau tetap 'Luckiest Guy' */
+    font-size: 1.1em; /* Ukuran teks */
+    color: #555; /* Warna abu-abu gelap */
+    margin-top: -5px; /* Sedikit naik agar dekat dengan teks di atasnya */
+    margin-bottom: 15px; /* Jarak dengan konten di bawahnya */
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5); /* Sedikit bayangan putih untuk menonjol */
+    font-weight: bold; /* Agar sedikit tebal */
 }
 
 
