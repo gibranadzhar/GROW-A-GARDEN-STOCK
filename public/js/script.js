@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'Strawberry': '🍓',
         'Tomato': '🍅',
         'Blueberry': '🫐',
-        'Orange Tulip': '🌷', // Default flower for tulips
+        'Orange Tulip': '🌷',
 
         'Tanning Mirror': '🪞',
         'Recall Wrench': '🔧',
@@ -32,10 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
         'Torch': '🔥',
         'Brown Stone Pillar': '🟫',
         'Brick Stack': '🧱',
-        'Water Trough': '🚿', //Closest emoji
+        'Water Trough': '🚿',
         'Mini TV': '📺',
         'Orange Umbrella': '⛱️',
-        // Tambahkan item kosmetik spesifik lainnya dari API jika Anda ingin emoji khusus
 
         'Bee Chair': '🪑',
         'Flower Seed Pack': '🌻',
@@ -53,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
         'seeds': '🌱',
         'gear': '⚙️',
         'eggs': '🥚',
-        'cosmetics': '✨', // Default emoji untuk cosmetics jika tidak ada yang spesifik
-        'honey': '🍯', // Default emoji untuk honey
-        'EVENT': '✨' // Jika ada item event lain tanpa kategori spesifik
+        'cosmetics': '✨',
+        'honey': '🍯',
+        'EVENT': '✨'
     };
 
     // --- Pemetaan Emoji untuk Cuaca ---
@@ -63,9 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
         'normal': '☀️ Normal',
         'rain': '🌧️ Hujan',
         'tornado': '🌪️ Tornado',
-        'storm': '⛈️ Badai', // Contoh jika ada tipe lain
-        'snow': '❄️ Bersalju', // Contoh jika ada tipe lain
-        'wind': '🌬️ Berangin', // Contoh jika ada tipe lain
+        'storm': '⛈️ Badai',
+        'snow': '❄️ Bersalju',
+        'wind': '🌬️ Berangin',
         'unknown': '❓ Cuaca Tidak Diketahui'
     };
 
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fungsi untuk memulai/memperbarui hitung mundur
     function startCountdown() {
-        clearInterval(countdownInterval); // Hentikan interval sebelumnya jika ada
+        clearInterval(countdownInterval);
 
         const now = new Date();
         const currentMinutes = now.getMinutes();
@@ -90,15 +89,14 @@ document.addEventListener('DOMContentLoaded', function() {
             nextResetTime.setHours(now.getHours() + 1);
             nextResetTime.setMinutes(0);
             nextResetTime.setSeconds(0);
-            nextResetTime.setMilliseconds(0); // Penting untuk akurasi
+            nextResetTime.setMilliseconds(0);
         } else {
             nextResetTime.setMinutes(nextResetMinute);
             nextResetTime.setSeconds(0);
-            nextResetTime.setMilliseconds(0); // Penting untuk akurasi
+            nextResetTime.setMilliseconds(0);
         }
         
-        // Jika waktu reset sudah lewat di detik yang sama, geser ke siklus 5 menit berikutnya
-        if (nextResetTime.getTime() < now.getTime() && now.getSeconds() >= 0) { // Cek tambahan agar tidak selalu geser
+        if (nextResetTime.getTime() < now.getTime() && now.getSeconds() >= 0) {
              nextResetTime = new Date(nextResetTime.getTime() + RESET_INTERVAL_MS);
         }
 
@@ -109,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (timeRemaining <= 0) {
                 countdownTimerDiv.textContent = 'Update berikutnya dalam: 00:00';
                 clearInterval(countdownInterval);
-                fetchDataAndDisplay(); // Panggil fungsi untuk memuat ulang data
-                startCountdown(); // Mulai hitung mundur lagi untuk siklus berikutnya
+                fetchDataAndDisplay();
+                startCountdown();
                 return;
             }
 
@@ -142,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 let formattedStockHtml = '';
                 let formattedEventHtml = '';
 
-                // --- BAGIAN MENAMPILKAN STOK ---
                 const categoriesToDisplay = [
                     { key: 'seeds', title: 'Seeds Stock', emoji: '🌱' },
                     { key: 'gear', title: 'Gear Stock', emoji: '⚙️' },
@@ -151,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ];
 
                 categoriesToDisplay.forEach(categoryInfo => {
-                    const categoryItems = resultData.hasOwnProperty(categoryInfo.key) ? resultData[categoryInfo.key] : [];
+                    const categoryItems = resultData.hasOwnProperty(categoryInfo.key) ? resultData [categoryInfo.key] : [];
 
                     if (Array.isArray(categoryItems) && categoryItems.length > 0) {
                         categoryItems.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
@@ -163,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             const itemName = item.name || 'Produk Tanpa Nama';
                             const itemQuantity = item.quantity !== undefined ? item.quantity : 'Stok Tidak Diketahui';
                             
-                            // Dapatkan emoji untuk item ini, jika tidak ada, gunakan default kategori
                             const emoji = itemEmojis[itemName] || categoryDefaultEmojis[categoryInfo.key] || '-';
 
                             formattedStockHtml += `<li>${emoji} ${itemName} x${itemQuantity}</li>`;
@@ -246,4 +242,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Tambahkan event listener untuk tombol (jika pengguna ingin memuat ulang manual)
     loadStockButton.addEventListener('click', fetchDataAndDisplay);
 });
-</script>
