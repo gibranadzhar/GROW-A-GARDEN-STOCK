@@ -15,15 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
-            const apiResponse = await response.json(); // Simpan respons lengkap API
+            const apiResponse = await response.json();
 
-            // Periksa apakah ada properti 'result'
             if (apiResponse && apiResponse.result) {
                 const resultData = apiResponse.result;
                 let allItems = [];
 
                 // Kumpulkan semua item dari berbagai kategori
-                // Periksa setiap kategori dan tambahkan itemnya jika ada
                 if (Array.isArray(resultData.seeds)) {
                     allItems = allItems.concat(resultData.seeds);
                 }
@@ -39,19 +37,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (Array.isArray(resultData.honey)) {
                     allItems = allItems.concat(resultData.honey);
                 }
-                // Anda bisa menambahkan kategori lain di sini jika ada
+                
+                // Urutkan item berdasarkan nama agar lebih rapi (opsional)
+                allItems.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
 
                 if (allItems.length > 0) {
                     let stockHtml = '<ul class="stock-items">';
                     allItems.forEach(item => {
-                        // Akses properti 'name' dan 'quantity' yang benar
                         const itemName = item.name || 'Produk Tanpa Nama';
-                        const itemQuantity = item.quantity !== undefined ? item.quantity : 'Stok Tidak Diketahui'; // quantity bisa 0
+                        const itemQuantity = item.quantity !== undefined ? item.quantity : 'Stok Tidak Diketahui';
+                        const imageUrl = item.imageUrl || ''; // Dapatkan URL gambar, jika ada
 
-                        stockHtml += `<li class="stock-item">
-                                        <span class="product-name">${itemName}</span>: 
+                        stockHtml += `<li class="stock-item">`;
+                        // Tambahkan tag img jika imageUrl tersedia
+                        if (imageUrl) {
+                            stockHtml += `<img src="${imageUrl}" alt="${itemName}" class="stock-item-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/60?text=No+Image';">`;
+                            // onerror: Jika gambar gagal dimuat, akan menampilkan placeholder
+                        }
+                        stockHtml += `<div class="item-details">
+                                        <span class="product-name">${itemName}</span><br>
                                         <span class="product-stock">${itemQuantity} unit</span>
-                                      </li>`;
+                                      </div>
+                                    </li>`;
                     });
                     stockHtml += '</ul>';
                     stockListDiv.innerHTML = stockHtml;
@@ -67,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Ada masalah saat mengambil data stok:', error);
             stockListDiv.innerHTML = `<p style="color: red;">Gagal memuat data stok: ${error.message}. Silakan coba lagi nanti.</p>`;
         } finally {
-            loadStockButton.disabled = false; // Aktifkan kembali tombol
-            loadStockButton.textContent = 'Lihat Stok Sekarang!'; // Kembalikan teks tombol
+            loadStockButton.disabled = false;
+            loadStockButton.textContent = 'Lihat Stok Sekarang!';
         }
     }
 
