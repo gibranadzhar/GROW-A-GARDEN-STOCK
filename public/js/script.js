@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadStockButton = document.getElementById('loadStockButton');
     const eventListDiv = document.getElementById('eventList');
     const countdownTimerDiv = document.getElementById('countdownTimer');
+    const weatherEffectsDiv = document.getElementById('weatherEffects'); // Ambil elemen efek cuaca
 
     const RESET_INTERVAL_MS = 5 * 60 * 1000; // 5 menit dalam milidetik
     let countdownInterval;
@@ -119,6 +120,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
+    // Fungsi untuk mengatur kelas efek cuaca
+    function setWeatherEffect(weatherType) {
+        // Hapus semua kelas cuaca yang ada
+        weatherEffectsDiv.className = 'weather-effects-container';
+        
+        // Tambahkan kelas cuaca yang sesuai
+        if (weatherType) {
+            weatherEffectsDiv.classList.add(`weather-${weatherType.toLowerCase()}`);
+        }
+    }
+
     // Fungsi asinkron untuk mengambil dan menampilkan data (termasuk stok dan event)
     async function fetchDataAndDisplay() {
         stockListDiv.innerHTML = '<p>Memuat data stok...</p>';
@@ -140,6 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let formattedStockHtml = '';
                 let formattedEventHtml = '';
 
+                // --- BAGIAN MENAMPILKAN STOK ---
                 const categoriesToDisplay = [
                     { key: 'seeds', title: 'Seeds Stock', emoji: '🌱' },
                     { key: 'gear', title: 'Gear Stock', emoji: '⚙️' },
@@ -178,8 +191,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     const isActive = resultData.weather.active;
                     const weatherDisplay = weatherEmojis[weatherType] || weatherEmojis['unknown'];
                     formattedEventHtml += `<p><strong>${weatherDisplay}</strong>: ${isActive ? 'Active' : 'Inactive'}</p>`;
+                    
+                    // --- PENTING: ATUR EFEK CUACA DI SINI ---
+                    setWeatherEffect(weatherType);
+
                 } else {
                     formattedEventHtml += '<p>No current weather data.</p>';
+                    setWeatherEffect('normal'); // Kembali ke normal jika tidak ada data
                 }
 
                 formattedEventHtml += '<h4>Event-Related Items:</h4>';
@@ -223,12 +241,14 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 stockListDiv.innerHTML = '<p>Tidak ada data atau struktur API salah.</p>';
                 eventListDiv.innerHTML = '<p>Gagal memuat info event.</p>';
+                setWeatherEffect('normal'); // Kembali ke normal jika ada error API
             }
 
         } catch (error) {
             console.error('Error fetching data:', error);
             stockListDiv.innerHTML = `<p style="color: red;">Gagal memuat stok: ${error.message}.</p>`;
-            eventListDiv.innerHTML = `<p style="color: red;">Gagal memuat info event: ${error.message}.</p>`;
+            eventListDiv.innerHTML = `<p style="color: red;">Gagal memuat informasi event: ${error.message}.</p>`;
+            setWeatherEffect('normal'); // Kembali ke normal jika ada error jaringan
         } finally {
             loadStockButton.disabled = false;
             loadStockButton.textContent = 'Lihat Stok Sekarang!';
